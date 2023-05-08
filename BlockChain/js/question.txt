@@ -1,0 +1,188 @@
+const quizData = [
+    {
+        question: "How does blockchain technology help organizations when sharing data?",
+        a: "Data can only be exchanged through a central, trusted organization.",
+        b: "Data can be edited or removed only through certain authorized central nodes.",
+        c: "Everyone has transparency over how the data has been added.",
+        d: "Data can only be exchanged through a central, trust organization",
+        correct: "d",
+    },
+    {
+        question: "As Accenture explores an end-to-end business flow that has reconciliation between multiple parties, what would we uncover?",
+        a: "shared state",
+        b: "trapped value ",
+        c: "ownership ",
+        d: "transparency ",
+        correct: "a",
+    },
+    {
+        question: " .A company wishes to begin the process of implementing a Multi-party System and is looking for other companies with similar interests to join them. With blockchain, every organization sees the same data. What does this provide?",
+        a: " ownership",
+        b: "intent ",
+        c: "trust ",
+        d: "uniqueness",
+        correct: "d",
+    },
+    {
+        question: "What is the core domain for Accenture’s Multi-party Systems practice?",
+        a: ".social networking ",
+        b: " .social networking",
+        c: " .digital identity",
+        d: ".employee retention",
+        correct: "c",
+    },
+    {
+        question: " What is one of the reasons to consider implementing a blockchain solution?",
+        a: "ability to work on different versions of the same data",
+        b: "inability to trace and access data of other users",
+        c: "ability to verify that data has not been tampered with since its creation",
+        d: ".inability to track simultaneous updates by multiple users",
+        correct: "c",
+    },
+    {
+        question: "What does P2P stand for?",
+        a: "Peer to Peer ",
+        b: "Product to Product ",
+        c: "Password to Password",
+        d: "Private Key to Public Key ",
+        correct: "a",
+    },
+    {
+        question: "What is a smart contract?",
+        a: "Online contract",
+        b: "Offline contract ",
+        c: "Digital contract ",
+        d: "Programs stored on a blockchain that run when predetermined conditions are met  ",
+        correct: "d",
+    },
+    {
+        question: "Where is a Blockchain’s central server?",
+        a: "Ordered Node ",
+        b: "Where the blockchain is created",
+        c: "There is no central server, it is distributed ",
+        d: "Located with the owner of the server ",
+        correct: "c",
+    },
+    {
+        question: "What does a ledger in blockchain does?",
+        a: "Identification of owners",
+        b: "Mapping between owner and object",
+        c: "Identification of objects owned ",
+        d: "None of the Above",
+        correct: "b",
+    },
+    {
+        question: "The height of the block is the ____ in the chain between it and the genesis block.",
+        a: "Metadata that is",
+        b: "Merkle tree hash ",
+        c: "Size of the memory cache ",
+        d: "Number of blocks ",
+        correct: "d",
+    },
+    {
+        question: "What time did Bitcoin Network Start?",
+        a: "August 2004 ",
+        b: "November 2008 ",
+        c: "January 2009 ",
+        d: "December 2011",
+        correct: "c",
+    },
+    {
+        question: "The transaction Merkle Tree root value in a Bitcoin block is calculated using,",
+        a: "ash of transactions ",
+        b: "Previous block's hash ",
+        c: "Number of transactions",
+        d: "None of the above ",
+        correct: "a",
+    },
+    {
+        question: "What is not a ledger type considered by users in Blockchain?",
+        a: " Distributed Ledger",
+        b: " Decentralized Ledger",
+        c: "Both (A) and (B)",
+        d: "None of the Above",
+        correct: "d",
+    },
+    {
+        question: "Bitcoin is based on _________ blockchain.",
+        a: " Public",
+        b: " Private ",
+        c: "Permissioned ",
+        d: "Public Permissioned",
+        correct: "a",
+    },
+    {
+        question: "Where can you buy cryptocurrency?",
+        a: "An exchange ",
+        b: "A Bitcoin ATM",
+        c: "A private transaction",
+        d: " All of the above ",
+        correct: "d",
+    },
+
+    
+];
+
+const quiz = document.getElementById('quiz')
+const answerEls = document.querySelectorAll('.answer')
+const questionEl = document.getElementById('question')
+const a_text = document.getElementById('a_text')
+const b_text = document.getElementById('b_text')
+const c_text = document.getElementById('c_text')
+const d_text = document.getElementById('d_text')
+const submitBtn = document.getElementById('submit')
+
+let currentQuiz = 0
+let score = 0
+
+loadQuiz()
+
+function loadQuiz() {
+    deselectAnswers()
+
+    const currentQuizData = quizData[currentQuiz]
+
+    questionEl.innerText = currentQuizData.question
+    a_text.innerText = currentQuizData.a
+    b_text.innerText = currentQuizData.b
+    c_text.innerText = currentQuizData.c
+    d_text.innerText = currentQuizData.d
+}
+
+function deselectAnswers() {
+    answerEls.forEach(answerEl => answerEl.checked = false)
+}
+
+function getSelected() {
+    let answer
+
+    answerEls.forEach(answerEl => {
+        if(answerEl.checked) {
+            answer = answerEl.id
+        }
+    })
+
+    return answer
+}
+
+submitBtn.addEventListener('click', () => {
+    const answer = getSelected()
+    
+    if(answer) {
+        if(answer === quizData[currentQuiz].correct) {
+            score++
+        }
+
+        currentQuiz++
+
+        if(currentQuiz < quizData.length) {
+            loadQuiz()
+        } else {
+            quiz.innerHTML = `
+                <h2>You answered ${score}/${quizData.length} questions correctly</h2>
+
+                <button onclick="location.reload()">Reload</button>
+            `
+        }
+    }
+})
